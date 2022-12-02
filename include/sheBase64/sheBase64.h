@@ -9,12 +9,9 @@
 #include <iostream>
 
 namespace sheBase64 {
-using std::cout;
-using std::endl;
-
 /*
- * [0][x]:base64
- * [1][x]:SafeUrlBase64
+ * [0][x]:base64,base64编码结果中会有+、/、=三个特殊字符，它们在url中属于特殊字符是直接无法传递的；
+ * [1][x]:SafeUrlBase64,base64url其实就是把字符中的'+'和'/'分别替换成'-'和'_'，另外把末尾填充的‘=’去掉;其他都一样。
  */
 static const char* base64_table[2] ={
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -26,6 +23,7 @@ static const char* base64_table[2] ={
     "0123456789"
     "-_"
 };
+
 static unsigned char pos_of_char(const unsigned char chr) {
   if      (chr >= 'A' && chr <= 'Z') return chr - 'A';
   else if (chr >= 'a' && chr <= 'z') return chr - 'a' + ('Z' - 'A')               + 1;
@@ -36,6 +34,7 @@ static unsigned char pos_of_char(const unsigned char chr) {
     throw std::runtime_error("Input is not valid base64-encoded data.");
 }
 
+/* Convert binary stream data to base64 encoding */
 static std::string encode(std::string data) {
   int _size = data.size()%3;
   unsigned char zero = 0x00;
@@ -77,6 +76,7 @@ static std::string encode(std::string data) {
   return ret;
 };
 
+/* Convert base64 encoding to  binary stream data */
 static std::string decode(std::string data_base64) {
   int wait = 0;
   for (const char& e : data_base64) {
