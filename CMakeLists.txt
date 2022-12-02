@@ -27,6 +27,7 @@ include_directories(${googletest}/include)
 link_directories(${googletest}/lib)
 
 ########################################################################################################################
+# set target,test executable or lib
 if (target STREQUAL "test")
     file(GLOB_RECURSE SRC "${CMAKE_SOURCE_DIR}/test/*")
     add_executable(${PROJECT_NAME} ${SRC})
@@ -38,4 +39,5 @@ else()
 endif ()
 
 ########################################################################################################################
+# link
 target_link_libraries(${PROJECT_NAME} "-pthread" gmock gtest)
