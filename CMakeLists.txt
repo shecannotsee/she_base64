@@ -22,7 +22,7 @@ set(googletest "${CMAKE_SOURCE_DIR}/libraries/googletest")
 
 ########################################################################################################################
 # include
-include_directories(${googletest}/include)
+include_directories(${googletest}/include ${CMAKE_SOURCE_DIR}/include)
 # lib
 link_directories(${googletest}/lib)
 
