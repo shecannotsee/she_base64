@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 
 set(CMAKE_CXX_STANDARD 14) # googletest min cpp standard is c++14
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_FLAGS "-g")# 断点无效处理方案
+set(CMAKE_CXX_FLAGS "-g")# to deal clion debug invalid
 
 set(target "test")
 #set(target "libshe_base64")
@@ -32,7 +32,7 @@ if (target STREQUAL "test")
     add_executable(${PROJECT_NAME} ${SRC})
 elseif(target STREQUAL "libshe_base64")
     file(GLOB_RECURSE SRC "${CMAKE_SOURCE_DIR}/src/*")
-    add_library()
+    add_library(${PROJECT_NAME} STATIC ${SRC})
 else()
     message(STATUS "Target error")
 endif ()
