@@ -1,4 +1,7 @@
 #!/bin/bash
+if [ ! -d "./libraries" ]; then
+  mkdir ./libraries
+fi
 cd libraries
 mkdir googletest
 cd ..
