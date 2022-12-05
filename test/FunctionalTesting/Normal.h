@@ -7,8 +7,10 @@
 
 #include <random>
 #include <gtest/gtest.h>
-#include <sheBase64/sheBase64.h>
+//#include <sheBase64/sheBase64.h>
+#include "sheBase64.h"
 #include "../base64/base64.h"
+
 
 namespace FunctionalTesting{
 
