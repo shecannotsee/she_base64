@@ -15,7 +15,7 @@ namespace FunctionalTesting{
 namespace Normal{
   TEST(sheBase64,single_char){
     std::random_device rd;
-    for (int i=0;i<10000000;i++) {
+    for (int i=0;i<100;i++) {
       std::string a = std::to_string(rd());
       std::string ss;
       Base64::Encode(a,&ss);
