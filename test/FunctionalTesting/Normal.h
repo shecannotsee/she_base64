@@ -5,17 +5,27 @@
 #ifndef SHE_BASE64_TEST_TEST_FUNCTIONALTESTING_NORMAL_H_
 #define SHE_BASE64_TEST_TEST_FUNCTIONALTESTING_NORMAL_H_
 
+#include <random>
 #include <gtest/gtest.h>
 #include <sheBase64/sheBase64.h>
+#include "../base64/base64.h"
 
 namespace FunctionalTesting{
 
 namespace Normal{
   TEST(sheBase64,single_char){
-    for (int i=0;i<64;i++) {
-      std::string s = "\0";
-      EXPECT_STREQ(s.c_str(), sheBase64::base64_table[0][i]);
+    std::random_device rd;
+    for (int i=0;i<10000000;i++) {
+      std::string a = std::to_string(rd());
+      std::string ss;
+      Base64::Encode(a,&ss);
+      EXPECT_STREQ(sheBase64::encode(a).c_str(), ss.c_str())<<a;
+      std::cout<<a<<":"<<ss<<std::endl;
+      std::string sss;
+      Base64::Decode(ss,&sss);
+      EXPECT_STREQ(sheBase64::decode(ss).c_str(), sss.c_str())<<a;
     };
+
   };
 
   int testStart(){
