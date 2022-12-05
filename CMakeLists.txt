@@ -59,6 +59,7 @@ else()
 endif ()
 
 ########################################################################################################################
+# To use make install to build library
 # install include
 install(FILES
         ${CMAKE_SOURCE_DIR}/src/sheBase64.h # source head
