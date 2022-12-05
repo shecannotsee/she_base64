@@ -67,7 +67,7 @@ else()
 endif ()
 
 ########################################################################################################################
-set(CMAKE_INSTALL_PREFIX "./")
+set(CMAKE_INSTALL_PREFIX "/")
 message(STATUS "The default installation path is ${CMAKE_INSTALL_PREFIX}")
 message(STATUS "Please use \"make install DESTDIR=./PATH\" to set install path")
 
