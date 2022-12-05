@@ -10,25 +10,28 @@ set(CMAKE_BUILD_TYPE "RELEASE") # Release or Debug or MinSizeRel
 project(${PROJECT_NAME})
 
 ########################################################################################################################
-set(unit_test "on")
-set(library "on")
+set(unit_test "ON")
+set(library "ON")
 
 # test set
-if (unit_test STREQUAL "on")
+if (unit_test STREQUAL "ON")
     set(unit_test_name "she_base64_test")
 else()
     message(STATUS "CMakeLists.txt error")
 endif ()
 
 # lib set
-if (library STREQUAL "on")
-    set(library_name "she_base64")
+if (library STREQUAL "ON")
+    set(library_static_name "${PROJECT_NAME}_static")
+    set(library_dynamic_name "${PROJECT_NAME}_dynamic")
 else()
     message(STATUS "CMakeLists.txt error")
 endif ()
+#message(STATUS "${library_static_name}")
+#message(STATUS "${library_dynamic_name}")
 
 ########################################################################################################################
-# set 3rd path
+# set path
 set(googletest "${CMAKE_SOURCE_DIR}/libraries/googletest")
 
 ########################################################################################################################
@@ -43,7 +46,7 @@ link_directories(${googletest}/lib)
 ########################################################################################################################
 file(GLOB_RECURSE SRC "${CMAKE_SOURCE_DIR}/src/*")
 # test target
-if (unit_test STREQUAL "on")
+if (unit_test STREQUAL "ON")
     file(GLOB_RECURSE TEST_SRC "${CMAKE_SOURCE_DIR}/test/*")
     add_executable(${unit_test_name} ${TEST_SRC} ${SRC})
     target_link_libraries(${unit_test_name} "-pthread" gmock gtest)
@@ -52,25 +55,40 @@ else()
 endif ()
 
 # lib target
-if (library STREQUAL "on")
-    add_library(${library_name} STATIC ${SRC}) #  STATIC SHARED
+if (library STREQUAL "ON")
+    add_library(${library_static_name} STATIC ${SRC})
+    # Rename the generated static library
+    set_target_properties(${library_static_name} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+    add_library(${library_dynamic_name} SHARED ${SRC})
+    # Rename the generated dynamic library
+    set_target_properties(${library_dynamic_name} PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
 else()
     message(STATUS "CMakeLists.txt error")
 endif ()
 
 ########################################################################################################################
+set(CMAKE_INSTALL_PREFIX "./")
+message(STATUS "The default installation path is ${CMAKE_INSTALL_PREFIX}")
+message(STATUS "Please use \"make install DESTDIR=./PATH\" to set install path")
+
+install(TARGETS
+        ${unit_test_name}
+        DESTINATION
+        ${PROJECT_NAME}/bin
+        )
+
 # To use make install to build library
 # install include
 install(FILES
         ${CMAKE_SOURCE_DIR}/src/sheBase64.h # source head
         DESTINATION # to
-        ${CMAKE_SOURCE_DIR}/sheBase64/include # target dir
+        ${PROJECT_NAME}/include # target dir
         )
 # install lib
 install(TARGETS
-        ${library_name}
+        ${library_static_name} ${library_dynamic_name}
         DESTINATION
-        ${CMAKE_SOURCE_DIR}/sheBase64/lib
+        ${PROJECT_NAME}/lib
         )
 
 
