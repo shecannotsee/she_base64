@@ -36,7 +36,7 @@ if (target STREQUAL "test")
     add_executable(${PROJECT_NAME} ${TEST})
 elseif(target STREQUAL "libshe_base64")
     file(GLOB_RECURSE SRC "${CMAKE_SOURCE_DIR}/src/*")
-    add_library(${PROJECT_NAME} STATIC ${SRC})
+    add_library(${PROJECT_NAME} STATIC ${SRC}) #  STATIC SHARED
 else()
     message(STATUS "Target error")
 endif ()

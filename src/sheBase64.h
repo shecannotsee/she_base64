@@ -27,10 +27,10 @@ static const char* base64_table[2] ={
 static unsigned char pos_of_char(const unsigned char chr);
 
 /* Convert binary stream data to base64 encoding */
-static std::string encode(std::string data);
+std::string encode(std::string data);
 
 /* Convert base64 encoding to  binary stream data */
-static std::string decode(std::string data_base64);
+std::string decode(std::string data_base64);
 
 };//namespace sheBase64
 

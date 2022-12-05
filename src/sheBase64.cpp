@@ -4,7 +4,7 @@
 
 #include "sheBase64.h"
 
-static unsigned char sheBase64::pos_of_char(const unsigned char chr) {
+unsigned char sheBase64::pos_of_char(const unsigned char chr) {
   if      (chr >= 'A' && chr <= 'Z') return chr - 'A';
   else if (chr >= 'a' && chr <= 'z') return chr - 'a' + ('Z' - 'A')               + 1;
   else if (chr >= '0' && chr <= '9') return chr - '0' + ('Z' - 'A') + ('z' - 'a') + 2;
@@ -14,8 +14,7 @@ static unsigned char sheBase64::pos_of_char(const unsigned char chr) {
     throw std::runtime_error("Input is not valid base64-encoded data.");
 };
 
-
-static std::string sheBase64::encode(std::string data) {
+std::string sheBase64::encode(std::string data) {
   int _size = data.size()%3;
   unsigned char zero = 0x00;
   if ( _size == 1 ) {
@@ -56,7 +55,7 @@ static std::string sheBase64::encode(std::string data) {
   return ret;
 };
 
-static std::string sheBase64::decode(std::string data_base64) {
+std::string sheBase64::decode(std::string data_base64) {
   int wait = 0;
   for (const char& e : data_base64) {
     if (e == '=') wait++;

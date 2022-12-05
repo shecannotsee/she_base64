@@ -24,7 +24,7 @@ static const char* base64_table[2] ={
     "-_"
 };
 
-static unsigned char pos_of_char(const unsigned char chr) {
+unsigned char pos_of_char(const unsigned char chr) {
   if      (chr >= 'A' && chr <= 'Z') return chr - 'A';
   else if (chr >= 'a' && chr <= 'z') return chr - 'a' + ('Z' - 'A')               + 1;
   else if (chr >= '0' && chr <= '9') return chr - '0' + ('Z' - 'A') + ('z' - 'a') + 2;
@@ -35,7 +35,7 @@ static unsigned char pos_of_char(const unsigned char chr) {
 }
 
 /* Convert binary stream data to base64 encoding */
-static std::string encode(std::string data) {
+std::string encode(std::string data) {
   int _size = data.size()%3;
   unsigned char zero = 0x00;
   if ( _size == 1 ) {
@@ -77,7 +77,7 @@ static std::string encode(std::string data) {
 };
 
 /* Convert base64 encoding to  binary stream data */
-static std::string decode(std::string data_base64) {
+std::string decode(std::string data_base64) {
   int wait = 0;
   for (const char& e : data_base64) {
     if (e == '=') wait++;
