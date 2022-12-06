@@ -15,7 +15,7 @@ set(library "ON")
 
 # test set
 if (unit_test STREQUAL "ON")
-    set(unit_test_name "she_base64_test")
+    set(unit_test_name "${PROJECT_NAME}_test")
 else()
     message(STATUS "CMakeLists.txt error")
 endif ()
@@ -27,6 +27,7 @@ if (library STREQUAL "ON")
 else()
     message(STATUS "CMakeLists.txt error")
 endif ()
+#message(STATUS "${unit_test_name}")
 #message(STATUS "${library_static_name}")
 #message(STATUS "${library_dynamic_name}")
 
@@ -71,6 +72,7 @@ endif ()
 #set(CMAKE_INSTALL_PREFIX "./")
 # Release Code
 set(CMAKE_INSTALL_PREFIX "/")
+
 message(STATUS "The default installation path is ${CMAKE_INSTALL_PREFIX}")
 message(STATUS "Please use \"make install DESTDIR=./PATH\" to set install path")
 
