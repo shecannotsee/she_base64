@@ -69,9 +69,9 @@ endif ()
 
 ########################################################################################################################
 # local debug
-#set(CMAKE_INSTALL_PREFIX "./")
+set(CMAKE_INSTALL_PREFIX "./")
 # Release Code
-set(CMAKE_INSTALL_PREFIX "/")
+#set(CMAKE_INSTALL_PREFIX "/")
 
 message(STATUS "The default installation path is ${CMAKE_INSTALL_PREFIX}")
 message(STATUS "Please use \"make install DESTDIR=./PATH\" to set install path")
@@ -92,8 +92,6 @@ install(FILES
 # install lib
 install(TARGETS
         ${library_static_name} ${library_dynamic_name}
-        DESTINATION
-        ${PROJECT_NAME}/lib
+        DESTINATION ${PROJECT_NAME}/lib
         )
-
 
