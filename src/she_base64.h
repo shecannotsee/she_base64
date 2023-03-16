@@ -11,7 +11,6 @@ class she_base64 {
  private:
   static const char* base64;
   static const char* safe_url_base64;
-
   static unsigned char pos_of_char(unsigned char chr);
 
  public:
