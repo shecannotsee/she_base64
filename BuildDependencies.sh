@@ -1,4 +1,8 @@
 #!/bin/bash
+# add googletest source code
+git submodule update --init
+
+# create libraries dir
 if [ ! -d "./libraries" ]; then
   mkdir ./libraries
 fi
