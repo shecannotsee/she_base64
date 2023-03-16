@@ -1,6 +1,10 @@
 #!/bin/bash
 # add googletest source code
 git submodule update --init
+cd 3rd/googletest/
+git checkout v1.12.x
+cd ..
+cd ..
 
 # create libraries dir
 if [ ! -d "./libraries" ]; then
