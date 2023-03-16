@@ -1,1 +1,0 @@
- Use to test from https://github.com/tkislan/base64
