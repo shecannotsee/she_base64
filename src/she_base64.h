@@ -12,10 +12,11 @@ class she_base64 {
  private:
   static const char base64[];
   static const char safe_url_base64[];
-  static unsigned char pos_of_char(const char& chr);
+  static byte pos_of_char(const char& chr);
+  static bool check_base64_success(const std::string& base64_data);
 
  public:
-  enum class BASE_TYPE : unsigned char {
+  enum class BASE_TYPE : byte {
     BASE64,
     SAFE_URL_BASE64
   };
@@ -25,7 +26,7 @@ class she_base64 {
   static std::string encode(std::string data,BASE_TYPE base64_type = BASE_TYPE::BASE64);
 
   /* Convert base64 encoding >>>to>>>  binary stream data */
-  static std::string decode(const std::string& data_base64);
+  static std::string decode(const std::string& base64_data);
 
 };
 
