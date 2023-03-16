@@ -4,6 +4,7 @@
 
 #include "she_base64.h"
 #include <stdexcept>
+#include <iostream>
 
 const char she_base64::base64[] = {
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"  // 00-25
@@ -82,26 +83,26 @@ std::string she_base64::encode(std::string data,BASE_TYPE base64_type) {
 };
 
 bool she_base64::check_base64_success(const std::string& base64_data) {
-  try {
-    if (base64_data.size()%4 != 0 && base64_data.size() > 0) {
-      throw std::runtime_error("The string passed in is not base64 encoded.");
-    } else if (base64_data.size() == 0) {
-      return true;
-    }
-    for (const auto &chr : base64_data) {
-      she_base64::pos_of_char(chr);
-    }
-    return true;
-  } catch (const std::runtime_error& exc) {
-    exc.what();
-    // LOG_INFO(exc.waht());
+  if (base64_data.length() % 4 != 0) {
     return false;
   }
+  for (char base64_char : base64_data) {
+    try {
+      if (base64_char!='=') {
+        pos_of_char(base64_char);
+      }
+    }
+    catch (const std::runtime_error& exc) {
+      std::cout << exc.what() <<std::endl;
+      return false;
+    }
+  }
+  return true;
 };
 
 std::string she_base64::decode(const std::string& base64_data) {
-  if (check_base64_success(base64_data)) {
-    return std::string();
+  if (check_base64(base64_data) == false) {
+    return std::string("");
   };
   int tail_fill = 0;
 
