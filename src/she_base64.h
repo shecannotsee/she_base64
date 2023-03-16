@@ -8,10 +8,11 @@
 #include <string>
 
 class she_base64 {
+  using byte = unsigned char;
  private:
-  static const char* base64;
-  static const char* safe_url_base64;
-  static unsigned char pos_of_char(unsigned char chr);
+  static const char base64[];
+  static const char safe_url_base64[];
+  static unsigned char pos_of_char(const char& chr);
 
  public:
   enum class BASE_TYPE : unsigned char {
