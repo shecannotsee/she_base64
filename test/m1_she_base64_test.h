@@ -20,8 +20,10 @@ TEST(Base64Test, encoding_common) {
   EXPECT_EQ(she_base64::encode("The quick brown fox jumps over the lazy dog."), "VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZy4=");
 };
 TEST(Base64Test, encoding_special) {
-  EXPECT_EQ(she_base64::encode("\x00\x01\x02"), "AAEC");
-  EXPECT_EQ(she_base64::encode("\xFF\xFE\xFD"), "/v7+");
+  EXPECT_EQ(she_base64::encode("\x00\x01\x02"), "AAEC")
+            <<"["<<she_base64::encode("\x00\x01\x02")<<"]\n";
+  EXPECT_EQ(she_base64::encode("\xFF\xFE\xFD"), "/v7+")
+            <<"["<<she_base64::encode("\xFF\xFE\xFD")<<"]\n";;
 };
 
 
