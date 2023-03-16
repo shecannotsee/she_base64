@@ -4,7 +4,6 @@
 
 #include "she_base64.h"
 #include <stdexcept>
-#include <iostream>
 
 const char she_base64::base64[] = {
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
