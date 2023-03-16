@@ -20,21 +20,20 @@ TEST(Base64Test, encoding_common) {
   EXPECT_EQ(she_base64::encode("The quick brown fox jumps over the lazy dog."), "VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZy4=");
 };
 TEST(Base64Test, encoding_special) {
-  unsigned char temp1 = 0x00;
-  std::string input1;
-  input1 += temp1;input1 += (temp1+1);input1 += (temp1+2);
-  EXPECT_EQ(she_base64::encode(input1), "AAEC")
-            <<"output is:["<<she_base64::encode("\x00\x01\x02")<<"]\n";
-
-
-  unsigned char temp2 = 0xff;
-  std::string input2;
-  input2 += static_cast<char>(temp2);
-  input2 += static_cast<char>(temp2-1);
-  input2 += static_cast<char>(temp2-2);
-  // 63 63 59 61 __79
-  EXPECT_EQ(she_base64::encode(input2), "//79")
-            <<"output is:["<<she_base64::encode("\xFF\xFE\xFD")<<"],should:[//79]\n";
+  std::string input1;/* 0x00 0x01 0x02 */ {
+    unsigned char temp1 = 0x00;
+    input1 += temp1;
+    input1 += (temp1 + 1);
+    input1 += (temp1 + 2);
+  };
+  EXPECT_EQ(she_base64::encode(input1), "AAEC");
+  std::string input2;/* 0xff 0xfe 0xfd : 63 63 59 61 //79*/ {
+    unsigned char temp2 = 0xff;
+    input2 += static_cast<char>(temp2);
+    input2 += static_cast<char>(temp2 - 1);
+    input2 += static_cast<char>(temp2 - 2);
+  }
+  EXPECT_EQ(she_base64::encode(input2), "//79");
 };
 
 
@@ -46,17 +45,17 @@ TEST(Base64Test, decoding_common) {
   EXPECT_EQ(she_base64::decode("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZy4="), "The quick brown fox jumps over the lazy dog.");
 };
 TEST(Base64Test, decoding_special) {
-  unsigned char p1[3] = {0x00,0x01,0x02};
-  EXPECT_EQ(she_base64::decode("AAEC"), std::string("\x00\x01\x02"))
-            <<"output is:["<<she_base64::decode("AAEC")<<"],shoule:[]\n";
-
-  unsigned char p2[3] = {0xff,0xfe,0xfd};
-  EXPECT_EQ(she_base64::decode("//79"), std::string("\xFF\xFE\xFD"))
-            <<"output is:["<<she_base64::decode("//79")<<"]shoule:[]\n";
+  std::string input1;/* 0x00 0x01 0x02*/ {
+    unsigned char temp1 = 0x00;
+    input1 += temp1;
+    input1 += (temp1+1);
+    input1 += (temp1+2);
+  };
+  EXPECT_EQ(she_base64::decode("AAEC"), std::string(input1));
+  EXPECT_EQ(she_base64::decode("//79"), std::string("\xFF\xFE\xFD"));
 };
 TEST(Base64Test, decoding_error) {
-  EXPECT_EQ(she_base64::decode("SGVsbG8sIHdvcmxkIQ"), "")
-            <<"output is:["<<she_base64::decode("SGVsbG8sIHdvcmxkIQ")<<"]should:[]\n"; // 不完整的编码字符串
+  EXPECT_EQ(she_base64::decode("SGVsbG8sIHdvcmxkIQ"), ""); // 不完整的编码字符串
 };
 
 int main(int argc,char* argv[]) {
