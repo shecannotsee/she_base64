@@ -26,7 +26,7 @@ class she_base64 {
   static std::string encode(std::string data,BASE_TYPE base64_type = BASE_TYPE::BASE64);
 
   /* Convert base64 encoding >>>to>>>  binary stream data */
-  static std::string decode(const std::string& base64_data);
+  static std::string decode(const std::string& base64_data,bool start_check = true);
 
 };
 

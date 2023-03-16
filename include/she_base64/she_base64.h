@@ -113,10 +113,12 @@ class she_base64 {
   };;
 
   /* Convert base64 encoding >>>to>>>  binary stream data */
-  static std::string decode(const std::string& base64_data) {
-    if (!check_base64_success(base64_data)) {
-      return std::string("");
-    };
+  static std::string decode(const std::string& base64_data,bool start_check = true) {
+    if (start_check) {
+      if (!check_base64_success(base64_data)) {
+        return std::string("");
+      };
+    }
     int tail_fill = 0;
 
     for (int i = base64_data.size()-1; i>=0 ; --i ) {
