@@ -48,19 +48,19 @@ std::string she_base64::encode(std::string data,BASE_TYPE base64_type) {
   }
 
   std::string base64_str;
-  for (int i=0; i<data.size(); i=i+3 ) {
+  for (int i=0; i < data.size(); i=i+3 ) {
     unsigned char a;
-    a = data[i]>>2;
+    a = static_cast<unsigned char>(data[i])>>2;
     unsigned char b;
-    b = data[i]<<6;
+    b = static_cast<unsigned char>(data[i])<<6;
     b = b>>2;
-    b += data[i+1]>>4;
+    b += static_cast<unsigned char>(data[i+1])>>4;
     unsigned char c;
-    c = data[i+1]<<4;
+    c = static_cast<unsigned char>(data[i+1])<<4;
     c = c>>2;
-    c += data[i+2]>>6;
+    c += static_cast<unsigned char>(data[i+2])>>6;
     unsigned char d;
-    d = data[i+2]<<2;
+    d = static_cast<unsigned char>(data[i+2])<<2;
     d = d>>2;
     base64_str += base64_table_table[a];
     base64_str += base64_table_table[b];
