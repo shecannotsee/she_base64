@@ -6,17 +6,17 @@
 #include <stdexcept>
 
 const char she_base64::base64[] = {
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    "abcdefghijklmnopqrstuvwxyz"
-    "0123456789"
-    "-_"
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"  // 00-25
+    "abcdefghijklmnopqrstuvwxyz"  // 26-51
+    "0123456789"                  // 52-61
+    "+/"                          // 62-63
 };
 
 const char she_base64::safe_url_base64[] = {
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    "abcdefghijklmnopqrstuvwxyz"
-    "0123456789"
-    "-_"
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"  // 00-25
+    "abcdefghijklmnopqrstuvwxyz"  // 26-51
+    "0123456789"                  // 52-61
+    "-_"                          // 62-63
 };
 
 she_base64::byte she_base64::pos_of_char(const char& chr) {
@@ -40,7 +40,7 @@ std::string she_base64::encode(std::string data,BASE_TYPE base64_type) {
   }
 
   // confirm base64 or safe url base64
-  const char* base64_table_table;
+  const char* base64_table_table = nullptr;
   if (base64_type == BASE_TYPE::BASE64) {
     base64_table_table = she_base64::base64;
   } else if (base64_type == BASE_TYPE::SAFE_URL_BASE64) {
@@ -81,39 +81,60 @@ std::string she_base64::encode(std::string data,BASE_TYPE base64_type) {
   return base64_str;
 };
 
-std::string she_base64::decode(const std::string& data_base64) {
+bool she_base64::check_base64_success(const std::string& base64_data) {
+  try {
+    if (base64_data.size()%4 != 0 && base64_data.size() > 0) {
+      throw std::runtime_error("The string passed in is not base64 encoded.");
+    } else if (base64_data.size() == 0) {
+      return true;
+    }
+    for (const auto &chr : base64_data) {
+      she_base64::pos_of_char(chr);
+    }
+    return true;
+  } catch (const std::runtime_error& exc) {
+    exc.what();
+    // LOG_INFO(exc.waht());
+    return false;
+  }
+};
+
+std::string she_base64::decode(const std::string& base64_data) {
+  if (check_base64_success(base64_data)) {
+    return std::string();
+  };
   int tail_fill = 0;
 
-  for (int i = data_base64.size()-1; i>=0 ; --i ) {
-    if (data_base64[i] == '=') tail_fill++;
+  for (int i = base64_data.size()-1; i>=0 ; --i ) {
+    if (base64_data[i] == '=') tail_fill++;
     else break;
   }
 
-  int data_real_length = (data_base64.size()/4 )* 3 - tail_fill ;
+  int data_real_length = (base64_data.size()/4 )* 3 - tail_fill ;
 
   std::string data;
   byte temp = 0x00;
   int index = 0;
-  for (int i = 0; i < data_base64.size() ; i++) {
+  for (int i = 0; i < base64_data.size() ; i++) {
     if (data.size() == data_real_length) {
       break;
     } else if (index == 0) {
-      temp += static_cast<byte>(she_base64::pos_of_char(data_base64[i])<<2);
+      temp += static_cast<byte>(she_base64::pos_of_char(base64_data[i]) << 2);
       index = 6;
     } else if (index == 6) {
-      temp += static_cast<byte>(she_base64::pos_of_char(data_base64[i])>>4);
+      temp += static_cast<byte>(she_base64::pos_of_char(base64_data[i]) >> 4);
       data += temp;
       temp = 0x00;
-      temp = static_cast<byte>(she_base64::pos_of_char(data_base64[i])<<4);
+      temp = static_cast<byte>(she_base64::pos_of_char(base64_data[i]) << 4);
       index = 4;
     } else if ( index == 4 ) {
-      temp += static_cast<byte>(she_base64::pos_of_char(data_base64[i])>>2);
+      temp += static_cast<byte>(she_base64::pos_of_char(base64_data[i]) >> 2);
       data += temp;
       temp = 0x00;
-      temp = static_cast<byte>(she_base64::pos_of_char(data_base64[i])<<6);
+      temp = static_cast<byte>(she_base64::pos_of_char(base64_data[i]) << 6);
       index = 2;
     } else if ( index == 2 ) {
-      temp += static_cast<byte>(she_base64::pos_of_char(data_base64[i]));
+      temp += static_cast<byte>(she_base64::pos_of_char(base64_data[i]));
       data += temp;
       temp = 0x00;
       index = 0;
@@ -121,4 +142,4 @@ std::string she_base64::decode(const std::string& data_base64) {
   };
 
   return data;
-};
+}
