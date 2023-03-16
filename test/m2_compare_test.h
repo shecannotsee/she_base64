@@ -12,7 +12,7 @@
 
 namespace m2_compare_test {
 
-TEST(Base64Test, encoding_common) {
+TEST(base64_compare_test, encoding_common) {
   // 测试 Base64 编码函数
   EXPECT_EQ(she_base64::encode("Hello, world!"), "SGVsbG8sIHdvcmxkIQ==");
 };
