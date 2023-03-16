@@ -20,10 +20,23 @@ TEST(Base64Test, encoding_common) {
   EXPECT_EQ(she_base64::encode("The quick brown fox jumps over the lazy dog."), "VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZy4=");
 };
 TEST(Base64Test, encoding_special) {
-  EXPECT_EQ(she_base64::encode("\x00\x01\x02"), "AAEC")
-            <<"["<<she_base64::encode("\x00\x01\x02")<<"]\n";
-  EXPECT_EQ(she_base64::encode("\xFF\xFE\xFD"), "/v7+")
-            <<"["<<she_base64::encode("\xFF\xFE\xFD")<<"]\n";;
+  unsigned char temp1 = 0x00;
+  std::string input1;
+  input1 += temp1;input1 += (temp1+1);input1 += (temp1+2);
+  EXPECT_EQ(she_base64::encode(input1), "AAEC")
+  <<"["<<she_base64::encode("\x00\x01\x02")<<"]\n";
+
+  EXPECT_EQ(input1[0],'\x00');
+  EXPECT_EQ(input1[1],'\x01');
+  EXPECT_EQ(input1[2],'\x02');
+  unsigned char temp2 = 0xff;
+  std::string input2;
+  input2 += temp2;input2 += (temp2-1);input2 += (temp2-2);
+  EXPECT_EQ(she_base64::encode(input2), "/v7+")
+  <<"["<<she_base64::encode("\xFF\xFE\xFD")<<"]\n";;
+  EXPECT_EQ(input2[0],'\xFF');
+  EXPECT_EQ(input2[1],'\xFE');
+  EXPECT_EQ(input2[2],'\xFD');
 };
 
 
@@ -35,9 +48,11 @@ TEST(Base64Test, decoding_common) {
   EXPECT_EQ(she_base64::decode("VGhlIHF1aWNrIGJyb3duIGZveCBqdW1wcyBvdmVyIHRoZSBsYXp5IGRvZy4="), "The quick brown fox jumps over the lazy dog.");
 };
 TEST(Base64Test, decoding_special) {
-  EXPECT_EQ(she_base64::decode("AAEC"), "\x00\x01\x02");
-  EXPECT_EQ(she_base64::decode("/v7+"), "\xFF\xFE\xFD");
-  EXPECT_EQ(she_base64::decode("SGVsbG8sIHdvcmxkIQ"), ""); // 不完整的编码字符串
+  const unsigned char p[] ={0x00,0x01,0x02};
+  EXPECT_EQ(she_base64::decode("AAEC"), std::string("\x00\x01\x02"))
+  <<"["<<she_base64::decode("AAEC")<<"]\n";
+  EXPECT_EQ(she_base64::decode("/v7+"), std::string("\xFF\xFE\xFD"))
+  <<"["<<she_base64::decode("/v7+")<<"]\n";
 };
 TEST(Base64Test, decoding_error) {
   EXPECT_EQ(she_base64::decode("SGVsbG8sIHdvcmxkIQ"), ""); // 不完整的编码字符串
