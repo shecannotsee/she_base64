@@ -101,7 +101,7 @@ bool she_base64::check_base64_success(const std::string& base64_data) {
 };
 
 std::string she_base64::decode(const std::string& base64_data) {
-  if (check_base64(base64_data) == false) {
+  if (!check_base64_success(base64_data)) {
     return std::string("");
   };
   int tail_fill = 0;
