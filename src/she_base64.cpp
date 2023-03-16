@@ -143,4 +143,4 @@ std::string she_base64::decode(const std::string& base64_data) {
   };
 
   return data;
-}
+};
