@@ -14,14 +14,14 @@ example
 
 ```c++
 #include <iostream>
-#include "include/sheBase64/sheBase64.h"// header only
+#include "include/she_base64/she_base64.h"// header only
 
 int main() {
   std::string temp = "retrain";
   // data to base64
-  std::cout<<sheBase64::encode(temp)<<std::endl;
+  std::cout<<she_base64::encode(temp)<<std::endl;
   // base to data
-  std::cout<<sheBase64::decode(sheBase64::encode(temp))<<std::endl;
+  std::cout<<she_base64::decode(she_base64::encode(temp))<<std::endl;
 
   return 0;
 }
