@@ -4,6 +4,8 @@ cmake_minimum_required(VERSION 3.10)
 set(CMAKE_CXX_STANDARD 11) # googletest min cpp standard is c++14
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_FLAGS "-g")# to deal clion debug invalid
+SET(CMAKE_CXX_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage") # To check code coverage
+SET(CMAKE_C_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")   # To check code coverage
 
 set(PROJECT_NAME "she_base64" VERSION 0.0.1)
 set(CMAKE_BUILD_TYPE "RELEASE") # Release or Debug or MinSizeRel
