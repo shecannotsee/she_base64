@@ -34,7 +34,7 @@ int main() {
 ```bash
 git clone --recurse-submodules https://github.com/shecannotsee/sheBase64.git
 # Build Dependencies: to build gtest
-./BuildDependencies.sh
+./build_test_dependencies.sh
 ```
 
 # Building
