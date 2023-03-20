@@ -87,7 +87,7 @@ install(TARGETS
 # To use make install to build library
 # install include
 install(FILES
-        ${CMAKE_SOURCE_DIR}/src/sheBase64.h # source head
+        ${CMAKE_SOURCE_DIR}/src/she_base64.h # source head
         DESTINATION # to
         ${PROJECT_NAME}/include # target dir
         )
