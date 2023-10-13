@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.11)
 
-set(project_name "find_p_test")
+set(project_name "example")
 project(${project_name})
 
 # modify to your install path
