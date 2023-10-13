@@ -97,3 +97,9 @@ install(TARGETS
         DESTINATION ${PROJECT_NAME}/lib
         )
 
+# install cmake
+install(FILES
+        ${CMAKE_SOURCE_DIR}/cmake/she_base64-config.cmake
+        DESTINATION ${PROJECT_NAME}/cmake
+        )
+
