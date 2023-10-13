@@ -13,7 +13,7 @@ message(STATUS "----: ${she_base64}")
 message(STATUS "----: ${she_base64_FOUND}")
 message(STATUS "----: ${she_base64_INCLUDE_DIR}")
 message(STATUS "----: ${she_base64_LIBRARIES}")
-message(STATUS "----: ${she_base64_LINK_DIRECTORIES}")
+message(STATUS "----: ${she_base64_LINK_TARGET}")
 
 
 if(she_base64_FOUND)
@@ -26,5 +26,5 @@ endif()
 
 add_executable(${project_name} ${CMAKE_SOURCE_DIR}/main.cpp)
 
-target_link_libraries(${project_name} "-pthread" ${she_base64_LINK_DIRECTORIES})
+target_link_libraries(${project_name} "-pthread" ${she_base64_LINK_TARGET})
 
